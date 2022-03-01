@@ -5,7 +5,7 @@ class Film{
     private $regista;
     private $durata;
     private $lingua;   
-    private $cast;
+    private $cast = [];
 
     public function __construct($_titolo, $_regista, $_durata, $_lingua, $_cast){
         $this->titolo=$_titolo;
