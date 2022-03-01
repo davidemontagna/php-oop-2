@@ -15,17 +15,20 @@ $sale = [
 $sale[3] -> set4D(true);
 
 $film = [
-    new Film("Django Unchained", "Quentin Tarantino", "2h 45m", "Italiano", ["Jamie Foxx", "Leonardo DiCaprio" ]),
-    new Film("L'ora più buia", "Joe Wright", "2h 5m", "Originale", "Gary Oldman"),
-    new Film("Star Wars: L'impero colpisce ancora", "Irvin Kershner", "2h 4m", "Italiano", "Mark Hamill"),
-    new Film("Star Wars: L'impero colpisce ancora", "Irvin Kershner", "2h 4m", "Italiano", "Mark Hamill")
+    new Film("Django Unchained", "Quentin Tarantino", "2:45", "Italiano", ["Jamie Foxx", "Leonardo DiCaprio" ]),
+    new Film("L'ora più buia", "Joe Wright", "2:05", "Originale", "Gary Oldman"),
+    new Film("Star Wars: L'impero colpisce ancora", "Irvin Kershner", "2:04", "Italiano", "Mark Hamill"),
+    new Film("Star Wars: L'impero colpisce ancora", "Irvin Kershner", "2:04", "Italiano", "Mark Hamill")
 ];
 
 
 $spettacolo = [
-    new Spettacoli($sala[0], $film[0], "20:30", "2022-02-28"),
-    new Spettacoli($sala[1], $film[1], "21:00", "2022-02-28"),
-    new Spettacoli($sala[2], $film[2], "19:45", "2022-02-28"),
+    new Spettacoli($sala[0], $film[0], "13:30", "2022-02-24"),
+    new Spettacoli($sala[1], $film[0], "19:00", "2022-02-24"),
+    new Spettacoli($sala[2], $film[2], "19:45", "2022-02-26"),
+    new Spettacoli($sala[1], $film[2], "21:45", "2022-02-25"),
+    new Spettacoli($sala[2], $film[2], "22:45", "2022-03-01"),
+    new Spettacoli($sala[0], $film[3], "19:45", "2022-02-28"),
     new Spettacoli($sala[3], $film[3], "19:45", "2022-02-28")
 ];
 
@@ -70,7 +73,69 @@ $spettacolo = [
         
     </div>
 
+    <div>
+        <h2>3. Stabilito un giorno e un film, recuperare quante proiezioni totali di quel film ci saranno.</h2>
+        
+            <?php
+                $giorno = "2022-02-24";
+                $filmOggi = $film[0];
+                $proiezioni = 0;
+               
+                foreach($spettacolo as $elemento){
+                    if(($giorno == $elemento->getData()) && ($filmOggi == $elemento->getFilm())){
+                        $proiezioni++;
+                        
+                    }
+                    
+                }
+                echo "<span>Il giorno $giorno ci saranno $proiezioni proiezioni</span>";
+            ?>
+        
+    </div>
       
+
+    <div>
+        <h2>4. Stabilito un giorno, recupera l’orario di fine dell’ultimo spettacolo.</h2>
+        
+            <?php
+                $giorno = "2022-02-24";              
+                
+                foreach($spettacolo as $elemento){
+                    if($giorno == $elemento->getData()){
+                        if($elemento->getOrario() > $oraUltimoSpett){
+                            $oraUltimoSpett = $elemento->getOrario();
+                        }                        
+                    }                    
+                }
+
+                $orarioFinale = explode(":", $oraUltimoSpett);
+                //var_dump($orarioFinale);
+
+                foreach($spettacolo as $elemento){
+                    if($oraUltimoSpett == $elemento->getOrario()){
+                        $durata = $elemento->getFilm()->getDurata();
+                    }
+                }
+                
+                $lunghezzaFilm = explode(":", $durata);
+                //var_dump($lunghezzaFilm);
+
+                $orarioFinale[0] = $orarioFinale[0] + $lunghezzaFilm[0];
+                $orarioFinale[1] = $orarioFinale[1] + $lunghezzaFilm[1];
+                
+                if($orarioFinale[1] == 60){
+                    $orarioFinale[0]++;
+                    $orarioFinale[1] = 00;
+                }
+
+                if($orarioFinale[0] == 24){
+                    $orarioFinale[0] = 00;
+                }
+
+                echo "<span>L'ultimo spettacolo del $giorno inizierà alle $oraUltimoSpett finirà alle $orarioFinale[0]:$orarioFinale[1]</span>";
+            ?>
+        
+    </div>
 
 
 </body>

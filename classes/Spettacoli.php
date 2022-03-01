@@ -17,8 +17,16 @@ class Spettacoli{
         $this->data=$_data;        
     }
 
-    public function getInfoSpettacolo(){
-        return $this->effetti_speciali;
+    public function getData(){
+        return $this->data;
+    }
+
+    public function getOrario(){
+        return $this->orario;
+    }
+
+    public function getFilm(){
+        return $this->film;
     }
 
     public function setEffetti_speciali(){

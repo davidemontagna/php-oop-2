@@ -1,7 +1,7 @@
 <?php
 
 class Film{
-    private $titolo;
+    protected $titolo;
     private $regista;
     private $durata;
     private $lingua;   
@@ -15,6 +15,9 @@ class Film{
         $this->cast=$_cast;
     }
 
+    public function getDurata(){
+        return $this->durata;
+    }
     
    
 
